@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard · Secure Grievance Portal</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <div class="brand"><span class="mark">SG</span> Secure Grievance Portal</div>
+    <nav>
+      <span class="session-pill" id="whoami">…</span>
+      <a href="#" id="logoutLink">Sign out</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <div>
+        <h1>Admin dashboard</h1>
+        <p>Review, filter and respond to student submissions.</p>
+      </div>
+    </div>
+
+    <div class="stat-row" id="statRow"></div>
+
+    <div class="toolbar">
+      <div>
+        <label for="f_status">Status</label>
+        <select id="f_status">
+          <option value="all">All</option>
+          <option value="pending">Pending</option>
+          <option value="in-review">In review</option>
+          <option value="resolved">Resolved</option>
+        </select>
+      </div>
+      <div>
+        <label for="f_category">Category</label>
+        <select id="f_category">
+          <option value="all">All</option>
+          <option>Academic</option>
+          <option>Facilities</option>
+          <option>Administrative</option>
+          <option>Faculty / Staff</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div style="flex:1; min-width:180px;">
+        <label for="f_search">Search</label>
+        <input type="text" id="f_search" placeholder="Subject, student, ticket ID…" style="width: 100%; max-width:260px;">
+      </div>
+    </div>
+
+    <div id="ticketListWrap">
+      <div class="ticket-grid" id="ticketGrid"></div>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    Prototype built from an internship report · data stored locally in this browser, not on a server
+  </footer>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Portal · Secure Grievance Portal</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <div class="brand"><span class="mark">SG</span> Secure Grievance Portal</div>
+    <nav>
+      <span class="session-pill" id="whoami">…</span>
+      <a href="#" id="logoutLink">Sign out</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <div>
+        <h1>Your submissions</h1>
+        <p>Submit new feedback or a grievance, and track its status here.</p>
+      </div>
+    </div>
+
+    <section class="panel">
+      <h2>Submit feedback or a grievance</h2>
+      <div class="sub">Your submission is only visible to you and to administrators.</div>
+
+      <div class="alert alert-success" id="submitSuccess">Submitted — you can track it below.</div>
+
+      <form id="ticketForm">
+        <div class="two-col">
+          <div class="field">
+            <label for="t_type">Type</label>
+            <select id="t_type" required>
+              <option value="Feedback">Feedback</option>
+              <option value="Grievance">Grievance</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="t_category">Category</label>
+            <select id="t_category" required>
+              <option>Academic</option>
+              <option>Facilities</option>
+              <option>Administrative</option>
+              <option>Faculty / Staff</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="t_subject">Subject</label>
+          <input type="text" id="t_subject" required maxlength="100" placeholder="Short summary of the issue">
+        </div>
+        <div class="field">
+          <label for="t_description">Description</label>
+          <textarea id="t_description" required maxlength="1000" placeholder="Describe the issue in detail…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:auto; padding-left:26px; padding-right:26px;">Submit</button>
+      </form>
+    </section>
+
+    <div id="ticketListWrap">
+      <div class="ticket-grid" id="ticketGrid"></div>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    Prototype built from an internship report · data stored locally in this browser, not on a server
+  </footer>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/portal.js"></script>
+</body>
+</html>

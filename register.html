@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create account · Secure Grievance Portal</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <div class="brand"><span class="mark">SG</span> Secure Grievance Portal</div>
+    <nav>
+      <a href="index.html">Sign in</a>
+      <a href="register.html">Register</a>
+    </nav>
+  </header>
+
+  <main class="center-stage">
+    <div class="auth-card">
+      <div class="auth-head">
+        <div class="mark">SG</div>
+        <h1>Create your account</h1>
+        <p>Register with your student details to submit feedback and grievances.</p>
+      </div>
+
+      <div class="alert alert-error" id="regError"></div>
+      <div class="alert alert-success" id="regSuccess"></div>
+
+      <form id="registerForm">
+        <div class="field">
+          <label for="r_name">Full name</label>
+          <input type="text" id="r_name" required placeholder="Janani A">
+        </div>
+        <div class="field">
+          <label for="r_regno">Register number</label>
+          <input type="text" id="r_regno" required placeholder="110725105034" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="r_dept">Department</label>
+          <input type="text" id="r_dept" required placeholder="CSE (Cyber Security)">
+        </div>
+        <div class="field">
+          <label for="r_password">Password</label>
+          <input type="password" id="r_password" required minlength="6" placeholder="At least 6 characters" autocomplete="new-password">
+          <div class="hint">Hashed with SHA-256 in your browser before it's stored — the plain text is never saved.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Create account</button>
+      </form>
+
+      <div class="auth-foot">Already registered? <a href="index.html">Sign in</a></div>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    Prototype built from an internship report · data stored locally in this browser, not on a server
+  </footer>
+</div>
+
+<script src="js/data.js"></script>
+<script>
+(async function () {
+  await seedIfNeeded();
+  const form = document.getElementById("registerForm");
+  const errorBox = document.getElementById("regError");
+  const successBox = document.getElementById("regSuccess");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorBox.classList.remove("show");
+    successBox.classList.remove("show");
+
+    const name = document.getElementById("r_name").value.trim();
+    const regNo = document.getElementById("r_regno").value.trim();
+    const dept = document.getElementById("r_dept").value.trim();
+    const password = document.getElementById("r_password").value;
+
+    if (!/^[0-9A-Za-z]{4,20}$/.test(regNo)) {
+      errorBox.textContent = "Register number should be 4–20 letters/numbers, no spaces.";
+      errorBox.classList.add("show");
+      return;
+    }
+
+    if (findStudent(regNo)) {
+      errorBox.textContent = "An account with that register number already exists.";
+      errorBox.classList.add("show");
+      return;
+    }
+
+    const users = getUsers();
+    users.push({
+      role: "student",
+      regNo,
+      name: sanitize(name),
+      department: sanitize(dept),
+      passwordHash: await hashPassword(password)
+    });
+    saveUsers(users);
+
+    successBox.textContent = "Account created. Redirecting to sign in…";
+    successBox.classList.add("show");
+    setTimeout(() => (window.location.href = "index.html"), 1100);
+  });
+})();
+</script>
+</body>
+</html>

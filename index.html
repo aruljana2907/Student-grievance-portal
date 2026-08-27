@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Student Grievance &amp; Feedback Portal</title>
+<meta name="description" content="A secure portal for students to submit confidential feedback and grievances, and for administrators to track and resolve them.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <div class="brand"><span class="mark">SG</span> Secure Grievance Portal</div>
+    <nav>
+      <a href="index.html">Sign in</a>
+      <a href="register.html">Register</a>
+    </nav>
+  </header>
+
+  <main class="center-stage">
+    <div class="login-wrap">
+      <div class="login-hero">
+        <span class="eyebrow">Secure by design</span>
+        <h2>One quiet, tracked place for student feedback and grievances.</h2>
+
+        <svg class="hero-art" viewBox="0 0 340 260" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A sealed envelope being tracked as a ticket">
+          <rect x="10" y="60" width="230" height="150" rx="12" fill="#FFFFFF" stroke="#DADFE3" stroke-width="1.5"/>
+          <path d="M10 72 L125 150 L240 72" stroke="#3D5A80" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="10" y="60" width="230" height="150" rx="12" fill="none" stroke="#DADFE3" stroke-width="1.5"/>
+          <g>
+            <rect x="150" y="120" width="150" height="108" rx="10" fill="#1B2430"/>
+            <circle cx="225" cy="150" r="16" fill="none" stroke="#F5F6F4" stroke-width="2.5"/>
+            <path d="M219 150 L223.5 155 L232 145" stroke="#2E8B7A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="168" y="180" width="114" height="7" rx="3.5" fill="#3D5A80"/>
+            <rect x="168" y="196" width="80" height="7" rx="3.5" fill="#3D5A80" opacity=".55"/>
+            <text x="168" y="212" font-family="IBM Plex Mono, monospace" font-size="9" fill="#F5F6F4" opacity=".7">#GRV-2026-0007</text>
+          </g>
+        </svg>
+
+        <p>Log in to submit a confidential ticket or, as an administrator, review and resolve the ones your students have raised.</p>
+
+        <ul class="trust-list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E8B7A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.4 8.4-7 10-3.6-1.6-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg> Passwords are hashed before storage</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E8B7A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Every ticket is private to you and admins</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E8B7A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M4 6h16M4 18h10"/></svg> Inputs are sanitized against injection</li>
+        </ul>
+      </div>
+
+    <div class="auth-card">
+      <div class="auth-head">
+        <div class="mark">SG</div>
+        <h1>Sign in</h1>
+        <p>Confidential feedback &amp; grievance handling for your department.</p>
+      </div>
+
+      <div class="role-toggle" role="tablist" aria-label="Sign in as">
+        <button type="button" class="active" id="tabStudent" role="tab" aria-selected="true">Student</button>
+        <button type="button" id="tabAdmin" role="tab" aria-selected="false">Admin</button>
+      </div>
+
+      <div class="alert alert-error" id="loginError"></div>
+
+      <!-- Student login -->
+      <form id="studentLoginForm">
+        <div class="field">
+          <label for="s_regno">Register number</label>
+          <input type="text" id="s_regno" name="regno" placeholder="110725105034" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="s_password">Password</label>
+          <input type="password" id="s_password" name="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in as student</button>
+      </form>
+
+      <!-- Admin login -->
+      <form id="adminLoginForm" style="display:none;">
+        <div class="field">
+          <label for="a_username">Admin username</label>
+          <input type="text" id="a_username" name="username" placeholder="admin" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="a_password">Password</label>
+          <input type="password" id="a_password" name="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in as admin</button>
+      </form>
+
+      <div class="auth-foot">New student? <a href="register.html">Create an account</a></div>
+
+      <div class="demo-note" id="demoNote">
+        DEMO CREDENTIALS<br>
+        Student — reg no <strong>110725105034</strong> / password <strong>Student@123</strong><br>
+        Admin — username <strong>admin</strong> / password <strong>Admin@123</strong>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    Prototype built from an internship report · data stored locally in this browser, not on a server
+  </footer>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
