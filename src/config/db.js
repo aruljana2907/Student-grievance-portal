@@ -156,7 +156,7 @@ const mockPool = {
     }
 
     // 11. SELECT ... FROM tickets WHERE t.user_id = ?
-    if (/SELECT .* FROM tickets t .* WHERE t\.user_id = \?/i.test(trimmed)) {
+    if (/WHERE t\.user_id = \?/i.test(trimmed)) {
       const userId = parseInt(params[0], 10);
       let list = mockStore.tickets.filter((t) => t.user_id === userId);
 
@@ -178,7 +178,7 @@ const mockPool = {
     }
 
     // 12. SELECT ... FROM tickets WHERE t.id = ?
-    if (/SELECT .* FROM tickets t .* WHERE t\.id = \?/i.test(trimmed)) {
+    if (/WHERE t\.id = \?/i.test(trimmed)) {
       const id = parseInt(params[0], 10);
       const ticket = mockStore.tickets.find((t) => t.id === id);
       if (!ticket) return [[]];
