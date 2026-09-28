@@ -382,6 +382,91 @@ const mockPool = {
   },
 };
 
+const bcrypt = require('bcrypt');
+
+function seedMockData() {
+  if (mockStore.users.length > 0) return;
+
+  const adminHash = bcrypt.hashSync('Admin@123', 10);
+  const studentHash = bcrypt.hashSync('Student@123', 10);
+
+  const adminId = mockStore.nextUserId++;
+  mockStore.users.push({
+    id: adminId,
+    role: 'admin',
+    name: 'Dean of Student Affairs',
+    register_no: 'ADMIN001',
+    email: 'admin@college.edu',
+    department: 'Administration',
+    password_hash: adminHash,
+    failed_attempts: 0,
+    locked_until: null,
+    created_at: new Date().toISOString(),
+  });
+
+  const studentId = mockStore.nextUserId++;
+  mockStore.users.push({
+    id: studentId,
+    role: 'student',
+    name: 'Janani A',
+    register_no: '110725105034',
+    email: 'student@college.edu',
+    department: 'Computer Science and Engineering',
+    password_hash: studentHash,
+    failed_attempts: 0,
+    locked_until: null,
+    created_at: new Date().toISOString(),
+  });
+
+  const sampleTickets = [
+    { code: 'GRV-2026-0001', type: 'grievance', cat: 'infrastructure', sub: 'Air Conditioning in Lab 3 Malfunctioning', desc: 'During afternoon practicals in CSE Lab 3, AC units shut down causing high temperatures.', prio: 'high', status: 'pending', resp: null },
+    { code: 'FBK-2026-0002', type: 'feedback', cat: 'library', sub: 'Request for Additional Cloud Computing Books', desc: 'Please procure 5 additional copies of the latest AWS and GCP certification study guides.', prio: 'medium', status: 'in_review', resp: 'Procurement team has reviewed the ISBN list and added it to the quarterly order.' },
+    { code: 'GRV-2026-0003', type: 'grievance', cat: 'hostel', sub: 'Intermittent Wi-Fi Connectivity in Block B', desc: 'The access point near Room 314 disconnects every 20 minutes.', prio: 'high', status: 'resolved', resp: 'IT Services replaced the PoE injector and recalibrated antenna power.' },
+    { code: 'FBK-2026-0004', type: 'feedback', cat: 'canteen', sub: 'Healthy Breakfast Options in Cafeteria', desc: 'Can fresh fruits, oats, and boiled eggs be added to breakfast?', prio: 'low', status: 'resolved', resp: 'Healthy breakfast counter inaugurated starting this week.' },
+    { code: 'GRV-2026-0005', type: 'grievance', cat: 'transportation', sub: 'Bus Route 12 Repeated Delays', desc: 'Bus 12 arrived 20 minutes late on Tuesday and Thursday.', prio: 'medium', status: 'in_review', resp: 'Coordinated with transport supervisor to use the ring road detour.' },
+    { code: 'GRV-2026-0006', type: 'grievance', cat: 'examination', sub: 'Elective Timetable Overlap', desc: 'Distributed Systems and Machine Learning exams scheduled at same slot.', prio: 'urgent', status: 'resolved', resp: 'Distributed Systems re-scheduled to alternate slot. Revised timetable issued.' },
+    { code: 'FBK-2026-0007', type: 'feedback', cat: 'academic', sub: 'Hands-on Workshop on Microservices', desc: 'Students would benefit from a weekend workshop on Docker and Kubernetes.', prio: 'medium', status: 'pending', resp: null },
+    { code: 'GRV-2026-0008', type: 'grievance', cat: 'infrastructure', sub: 'Flickering Projector in Seminar Hall 2', desc: 'HDMI projector flickers and drops audio during seminars.', prio: 'low', status: 'pending', resp: null },
+  ];
+
+  sampleTickets.forEach((t) => {
+    const tId = mockStore.nextTicketId++;
+    mockStore.tickets.push({
+      id: tId,
+      ticket_code: t.code,
+      user_id: studentId,
+      type: t.type,
+      category: t.cat,
+      subject: t.sub,
+      description: t.desc,
+      priority: t.prio,
+      status: t.status,
+      created_at: new Date(Date.now() - 3600000 * 24 * 3).toISOString(),
+      updated_at: new Date().toISOString(),
+    });
+
+    if (t.resp) {
+      const rId = mockStore.nextResponseId++;
+      mockStore.responses.push({
+        id: rId,
+        ticket_id: tId,
+        admin_id: adminId,
+        message: t.resp,
+        created_at: new Date().toISOString(),
+      });
+    }
+  });
+
+  mockStore.audit_logs.push({
+    id: mockStore.nextAuditId++,
+    user_id: null,
+    action: 'SYSTEM_BOOT_SEEDED',
+    ip: '127.0.0.1',
+    user_agent: 'Seed/Mock',
+    created_at: new Date().toISOString(),
+  });
+}
+
 function createRealPool() {
   return mysql.createPool({
     host: env.DB_HOST,
@@ -399,25 +484,60 @@ function createRealPool() {
 function getPool() {
   if (pool) return pool;
 
-  if (process.env.NODE_ENV === 'test' || process.env.USE_MOCK_DB === 'true') {
+  if (process.env.NODE_ENV === 'test') {
     isMock = true;
     pool = mockPool;
     return pool;
   }
 
-  try {
-    pool = createRealPool();
-    return pool;
-  } catch (err) {
-    console.warn('[Database] MySQL connection failed. Falling back to in-memory adapter:', err.message);
+  if (process.env.USE_MOCK_DB === 'true') {
     isMock = true;
+    seedMockData();
     pool = mockPool;
     return pool;
   }
+
+  // Create real pool wrapped with auto-fallback proxy
+  const realPool = createRealPool();
+  pool = {
+    isMock: false,
+    async execute(sql, params = []) {
+      try {
+        return await realPool.execute(sql, params);
+      } catch (err) {
+        if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND' || err.code === 'ETIMEDOUT') {
+          console.warn('[Database] MySQL server not reachable on port 3306. Auto-switching to in-memory store.');
+          isMock = true;
+          seedMockData();
+          return mockPool.execute(sql, params);
+        }
+        throw err;
+      }
+    },
+    async query(sql, params = []) {
+      try {
+        return await realPool.query(sql, params);
+      } catch (err) {
+        if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND' || err.code === 'ETIMEDOUT') {
+          console.warn('[Database] MySQL server not reachable on port 3306. Auto-switching to in-memory store.');
+          isMock = true;
+          seedMockData();
+          return mockPool.query(sql, params);
+        }
+        throw err;
+      }
+    },
+    async end() {
+      return realPool.end();
+    },
+  };
+
+  return pool;
 }
 
 function setMockMode(active = true) {
   isMock = active;
+  if (active) seedMockData();
   pool = active ? mockPool : null;
 }
 
@@ -425,5 +545,6 @@ module.exports = {
   getPool,
   setMockMode,
   resetMockStore,
+  seedMockData,
   getMockStore: () => mockStore,
 };

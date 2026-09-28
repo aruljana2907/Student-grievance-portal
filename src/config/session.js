@@ -16,8 +16,11 @@ const env = require('./env');
 function getSessionMiddleware() {
   let store;
 
-  if (process.env.NODE_ENV === 'test' || process.env.USE_MOCK_DB === 'true') {
-    // In-memory store for isolated Jest test suites
+  const db = require('./db');
+  const pool = db.getPool();
+
+  if (process.env.NODE_ENV === 'test' || process.env.USE_MOCK_DB === 'true' || pool.isMock) {
+    // In-memory store for isolated Jest test suites or offline mock
     store = new session.MemoryStore();
   } else {
     // MySQL persistent store for production & local dev
