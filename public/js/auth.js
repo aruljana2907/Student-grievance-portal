@@ -77,21 +77,57 @@ function initLoginForm() {
   });
 
   // Demo credential fast-fill buttons
-  window.fillCredentials = function (role) {
-    const regInput = document.getElementById('login-regno');
-    const pwdInput = document.getElementById('login-password');
-    if (!regInput || !pwdInput) return;
+  const demoStudentBtn = document.getElementById('demo-fill-student');
+  const demoAdminBtn = document.getElementById('demo-fill-admin');
 
-    if (role === 'admin') {
-      regInput.value = 'ADMIN001';
-      pwdInput.value = 'Admin@123';
-    } else {
-      regInput.value = '110725105034';
-      pwdInput.value = 'Student@123';
-    }
-    showToast(`Loaded ${role.toUpperCase()} credentials`, 'info', 1500);
-  };
+  if (demoStudentBtn) {
+    demoStudentBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      fillCredentials('student');
+    });
+  }
+  if (demoAdminBtn) {
+    demoAdminBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      fillCredentials('admin');
+    });
+  }
 }
+
+/**
+ * Fast Demo Autofill Helper
+ */
+function fillCredentials(role) {
+  const regInput = document.getElementById('login-regno');
+  const pwdInput = document.getElementById('login-password');
+  const errorAlert = document.getElementById('login-error-alert');
+
+  if (!regInput || !pwdInput) return;
+
+  if (errorAlert) {
+    errorAlert.classList.add('d-none');
+    errorAlert.textContent = '';
+  }
+
+  if (role === 'admin') {
+    regInput.value = 'ADMIN001';
+    pwdInput.value = 'Admin@123';
+  } else {
+    regInput.value = '110725105034';
+    pwdInput.value = 'Student@123';
+  }
+
+  regInput.dispatchEvent(new Event('input', { bubbles: true }));
+  regInput.dispatchEvent(new Event('change', { bubbles: true }));
+  pwdInput.dispatchEvent(new Event('input', { bubbles: true }));
+  pwdInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+  if (typeof showToast === 'function') {
+    showToast(`Loaded ${role.toUpperCase()} demo credentials`, 'info', 1500);
+  }
+}
+
+window.fillCredentials = fillCredentials;
 
 /**
  * Handle Registration Form

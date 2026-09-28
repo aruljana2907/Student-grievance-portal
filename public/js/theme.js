@@ -49,5 +49,11 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     updateToggleButtons(document.documentElement.getAttribute('data-theme') || 'light');
+    document.querySelectorAll('.btn-theme-toggle').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.toggleTheme();
+      });
+    });
   });
 })();

@@ -162,7 +162,13 @@ async function handleLogout() {
   }
 }
 
-// Preload CSRF token on page load
+// Preload CSRF token on page load & bind global action handlers
 document.addEventListener('DOMContentLoaded', () => {
   fetchCsrfToken();
+  document.querySelectorAll('.btn-logout, [onclick*="handleLogout"]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleLogout();
+    });
+  });
 });
