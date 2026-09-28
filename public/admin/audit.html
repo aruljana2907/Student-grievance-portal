@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Audit Logs &bull; Administrator Portal</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Admin Navigation Header -->
+  <header>
+    <nav class="portal-navbar navbar navbar-expand-lg" aria-label="Administrator Navigation">
+      <div class="container">
+        <a class="navbar-brand" href="/admin/dashboard.html">
+          <img src="/assets/favicon.svg" alt="College Logo" width="30" height="30">
+          <span>Administration Portal</span>
+        </a>
+        <button class="navbar-toggler btn-secondary-institutional" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav" aria-controls="adminNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="adminNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/dashboard.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/tickets.html">Manage Tickets</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/admin/audit.html" aria-current="page">Audit Logs</a>
+            </li>
+          </ul>
+
+          <div class="d-flex align-items-center gap-3">
+            <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+              <span aria-hidden="true">🌙</span> <span class="theme-text">Theme</span>
+            </button>
+            <span class="badge bg-danger text-truncate" style="max-width: 160px;" id="user-display-name">Administrator</span>
+            <button type="button" class="btn btn-sm btn-outline-danger" onclick="handleLogout()">Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="flex-grow-1 py-4">
+    <div class="container-fluid px-lg-5" id="admin-audit-table">
+      
+      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+          <h1 class="h3 fw-bold text-main mb-1">Security Audit Trail</h1>
+          <p class="text-muted small mb-0">Immutable records of authentications, security violations, and ticket state transitions</p>
+        </div>
+        <div>
+          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.location.reload()">
+            🔄 Refresh Logs
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter by Action -->
+      <div class="portal-card p-3 mb-4">
+        <div class="row align-items-center">
+          <div class="col-md-4">
+            <label for="audit-action-filter" class="form-label small text-muted">Filter by Event Action</label>
+            <select class="form-select" id="audit-action-filter">
+              <option value="">All Actions</option>
+              <option value="LOGIN_SUCCESS">Login Success</option>
+              <option value="LOGIN_FAILED">Login Failed</option>
+              <option value="LOGIN_BLOCKED_ACCOUNT_LOCKED">Account Lockout Blocked</option>
+              <option value="STUDENT_REGISTERED">Student Registered</option>
+              <option value="TICKET_CREATED">Ticket Created</option>
+              <option value="TICKET_EDITED">Ticket Edited</option>
+              <option value="TICKET_DELETED">Ticket Deleted</option>
+              <option value="CSV_EXPORT_DOWNLOADED">CSV Export</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logs Table -->
+      <div class="portal-card">
+        <div class="portal-card-header">
+          <h2 class="h6 mb-0 fw-bold text-main">Event Timeline</h2>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th scope="col" style="width: 180px;">Timestamp</th>
+                <th scope="col" style="width: 220px;">Event Action</th>
+                <th scope="col">User Account</th>
+                <th scope="col" style="width: 150px;">Origin IP</th>
+                <th scope="col">Client Agent</th>
+              </tr>
+            </thead>
+            <tbody id="admin-audit-table-body">
+              <tr>
+                <td colspan="5" class="text-center p-4">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status"></div> Loading audit events...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="portal-footer">
+    <div class="container text-center">
+      <p class="small text-muted mb-0">Secure Student Grievance & Feedback Portal &bull; College Engineering Project</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

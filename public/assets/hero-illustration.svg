@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d9488" />
+      <stop offset="100%" stop-color="#14b8a6" />
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-10%" width="125%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Background Ambient Glow & Grid -->
+  <rect width="600" height="400" rx="20" fill="url(#bgGrad)" />
+  <circle cx="500" cy="80" r="140" fill="#2563eb" opacity="0.08" />
+  <circle cx="100" cy="320" r="160" fill="#0d9488" opacity="0.07" />
+
+  <!-- Grid accent lines -->
+  <line x1="80" y1="40" x2="520" y2="40" stroke="#334155" stroke-opacity="0.4" stroke-dasharray="4 4" />
+  <line x1="80" y1="360" x2="520" y2="360" stroke="#334155" stroke-opacity="0.4" stroke-dasharray="4 4" />
+  <line x1="80" y1="40" x2="80" y2="360" stroke="#334155" stroke-opacity="0.4" stroke-dasharray="4 4" />
+  <line x1="520" y1="40" x2="520" y2="360" stroke="#334155" stroke-opacity="0.4" stroke-dasharray="4 4" />
+
+  <!-- Main Security Dashboard Canvas -->
+  <g filter="url(#cardShadow)">
+    <rect x="120" y="70" width="360" height="260" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1.5" />
+    <!-- Header bar -->
+    <rect x="120" y="70" width="360" height="42" rx="14" fill="#0f172a" />
+    <path d="M120 98H480V112H120z" fill="#0f172a" />
+    <circle cx="146" cy="91" r="5" fill="#ef4444" />
+    <circle cx="162" cy="91" r="5" fill="#f59e0b" />
+    <circle cx="178" cy="91" r="5" fill="#10b981" />
+    <!-- Window Title -->
+    <text x="210" y="95" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11" font-weight="600">STUDENT GRIEVANCE PORTAL // ENCRYPTED</text>
+  </g>
+
+  <!-- Metric Badges inside Mock Window -->
+  <g transform="translate(142, 130)">
+    <!-- Card 1: Pending -->
+    <rect x="0" y="0" width="98" height="56" rx="8" fill="#0f172a" stroke="#d97706" stroke-width="1" />
+    <text x="10" y="20" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="9" font-weight="600">PENDING</text>
+    <text x="10" y="44" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="18" font-weight="700">03</text>
+    <circle cx="82" cy="28" r="6" fill="#f59e0b" fill-opacity="0.2" />
+    <circle cx="82" cy="28" r="3" fill="#f59e0b" />
+
+    <!-- Card 2: In Review -->
+    <rect x="108" y="0" width="98" height="56" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="1" />
+    <text x="118" y="20" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="9" font-weight="600">IN REVIEW</text>
+    <text x="118" y="44" fill="#60a5fa" font-family="system-ui, sans-serif" font-size="18" font-weight="700">02</text>
+    <circle cx="190" cy="28" r="6" fill="#3b82f6" fill-opacity="0.2" />
+    <circle cx="190" cy="28" r="3" fill="#3b82f6" />
+
+    <!-- Card 3: Resolved -->
+    <rect x="216" y="0" width="98" height="56" rx="8" fill="#0f172a" stroke="#0d9488" stroke-width="1" />
+    <text x="226" y="20" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="9" font-weight="600">RESOLVED</text>
+    <text x="226" y="44" fill="#14b8a6" font-family="system-ui, sans-serif" font-size="18" font-weight="700">14</text>
+    <circle cx="298" cy="28" r="6" fill="#14b8a6" fill-opacity="0.2" />
+    <circle cx="298" cy="28" r="3" fill="#14b8a6" />
+  </g>
+
+  <!-- Ticket Rows inside Window -->
+  <g transform="translate(142, 204)">
+    <!-- Row 1 -->
+    <rect x="0" y="0" width="314" height="34" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8" />
+    <rect x="8" y="8" width="70" height="18" rx="4" fill="#1e293b" />
+    <text x="14" y="21" fill="#93c5fd" font-family="monospace" font-size="9" font-weight="700">GRV-2026-0001</text>
+    <text x="88" y="21" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="10" font-weight="500">AC in Lab 3 Maintenance</text>
+    <rect x="252" y="8" width="54" height="18" rx="9" fill="#f59e0b" fill-opacity="0.15" />
+    <text x="261" y="21" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="9" font-weight="700">Pending</text>
+
+    <!-- Row 2 -->
+    <rect x="0" y="42" width="314" height="34" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8" />
+    <rect x="8" y="50" width="70" height="18" rx="4" fill="#1e293b" />
+    <text x="14" y="63" fill="#93c5fd" font-family="monospace" font-size="9" font-weight="700">FBK-2026-0002</text>
+    <text x="88" y="63" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="10" font-weight="500">Library Cloud Books Proposal</text>
+    <rect x="246" y="50" width="60" height="18" rx="9" fill="#14b8a6" fill-opacity="0.15" />
+    <text x="254" y="63" fill="#14b8a6" font-family="system-ui, sans-serif" font-size="9" font-weight="700">Resolved</text>
+
+    <!-- Row 3 -->
+    <rect x="0" y="84" width="314" height="34" rx="6" fill="#0f172a" stroke="#334155" stroke-width="0.8" />
+    <rect x="8" y="92" width="70" height="18" rx="4" fill="#1e293b" />
+    <text x="14" y="105" fill="#93c5fd" font-family="monospace" font-size="9" font-weight="700">GRV-2026-0003</text>
+    <text x="88" y="105" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="10" font-weight="500">Hostel Wi-Fi Connectivity</text>
+    <rect x="248" y="92" width="58" height="18" rx="9" fill="#60a5fa" fill-opacity="0.15" />
+    <text x="254" y="105" fill="#60a5fa" font-family="system-ui, sans-serif" font-size="9" font-weight="700">In Review</text>
+  </g>
+
+  <!-- Left Floating Shield / Security Badge -->
+  <g filter="url(#cardShadow)" transform="translate(42, 100)">
+    <circle cx="40" cy="40" r="36" fill="#0f172a" stroke="#2563eb" stroke-width="2" />
+    <!-- Security Shield -->
+    <path d="M40 20L54 26V37C54 47 48 56 40 60C32 56 26 47 26 37V26L40 20Z" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
+    <path d="M35 39L39 43L46 35" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <!-- Right Floating Academic Cap Badge -->
+  <g filter="url(#cardShadow)" transform="translate(480, 240)">
+    <circle cx="36" cy="36" r="32" fill="#0f172a" stroke="#0d9488" stroke-width="2" />
+    <!-- Mortarboard / Graduation Cap -->
+    <path d="M36 22L52 29L36 36L20 29L36 22Z" fill="#14b8a6" />
+    <path d="M26 32V42C26 44 30.5 46 36 46C41.5 46 46 44 46 42V32" fill="none" stroke="#14b8a6" stroke-width="2" stroke-linecap="round" />
+    <path d="M50 31V41" stroke="#f59e0b" stroke-width="1.8" />
+    <circle cx="50" cy="42" r="2" fill="#f59e0b" />
+  </g>
+
+  <!-- Bottom Lock Icon Pill -->
+  <g filter="url(#cardShadow)" transform="translate(230, 342)">
+    <rect width="140" height="28" rx="14" fill="#0f172a" stroke="#2563eb" stroke-width="1.2" />
+    <circle cx="16" cy="14" r="5" fill="#2563eb" />
+    <path d="M14 12V10C14 8.9 14.9 8 16 8C17.1 8 18 8.9 18 10V12" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" />
+    <text x="32" y="18" fill="#93c5fd" font-family="system-ui, sans-serif" font-size="10" font-weight="700">AES-256 // BCRYPT</text>
+  </g>
+</svg>

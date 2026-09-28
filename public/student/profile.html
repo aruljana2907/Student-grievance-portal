@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile & Security &bull; Secure Grievance Portal</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav class="portal-navbar navbar navbar-expand-lg" aria-label="Student Navigation">
+      <div class="container">
+        <a class="navbar-brand" href="/student/dashboard.html">
+          <img src="/assets/favicon.svg" alt="College Logo" width="30" height="30">
+          <span>Student Portal</span>
+        </a>
+        <button class="navbar-toggler btn-secondary-institutional" type="button" data-bs-toggle="collapse" data-bs-target="#studentNav" aria-controls="studentNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="studentNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/student/dashboard.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/student/submit.html">New Ticket</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/student/tickets.html">My Submissions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/student/profile.html" aria-current="page">Profile</a>
+            </li>
+          </ul>
+
+          <div class="d-flex align-items-center gap-3">
+            <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+              <span aria-hidden="true">🌙</span> <span class="theme-text">Theme</span>
+            </button>
+            <span class="badge bg-secondary text-truncate" style="max-width: 150px;" id="user-display-name">Student</span>
+            <button type="button" class="btn btn-sm btn-outline-danger" onclick="handleLogout()">Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="flex-grow-1 py-4">
+    <div class="container">
+      <div class="row g-4 justify-content-center" id="profile-form">
+        
+        <!-- Profile Info Card -->
+        <div class="col-md-5">
+          <div class="portal-card p-4 h-100">
+            <h2 class="h5 fw-bold text-main mb-3">Enrolled Student Profile</h2>
+            <div class="mb-3 text-center py-3 bg-surface-elevated rounded">
+              <div class="display-6 mb-1" aria-hidden="true">🎓</div>
+              <h3 class="h5 fw-bold mb-0 text-main" id="profile-name">Student Name</h3>
+              <span class="badge bg-primary mt-1" id="profile-role">STUDENT</span>
+            </div>
+
+            <ul class="list-group list-group-flush bg-transparent">
+              <li class="list-group-item bg-transparent d-flex justify-content-between px-0">
+                <span class="text-muted">Register Number:</span>
+                <strong class="text-main" id="profile-regno">...</strong>
+              </li>
+              <li class="list-group-item bg-transparent d-flex justify-content-between px-0">
+                <span class="text-muted">Department:</span>
+                <strong class="text-main" id="profile-dept">...</strong>
+              </li>
+              <li class="list-group-item bg-transparent d-flex justify-content-between px-0">
+                <span class="text-muted">College Email:</span>
+                <strong class="text-main" id="profile-email">...</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Change Password Card -->
+        <div class="col-md-7 col-lg-6">
+          <div class="portal-card p-4">
+            <h2 class="h5 fw-bold text-main mb-1">Update Account Password</h2>
+            <p class="text-muted small mb-3">Ensure your new password contains at least 8 characters with mixed case and numbers.</p>
+
+            <form id="change-password-form" novalidate>
+              <div class="mb-3">
+                <label for="current-password" class="form-label">Current Password</label>
+                <input type="password" class="form-control" id="current-password" required autocomplete="current-password">
+              </div>
+
+              <div class="mb-3">
+                <label for="new-password" class="form-label">New Password</label>
+                <input type="password" class="form-control" id="new-password" required minlength="8" autocomplete="new-password">
+                <div class="input-hint">Minimum 8 characters, 1 uppercase, 1 lowercase, 1 number.</div>
+              </div>
+
+              <div class="mb-4">
+                <label for="confirm-new-password" class="form-label">Confirm New Password</label>
+                <input type="password" class="form-control" id="confirm-new-password" required minlength="8" autocomplete="new-password">
+              </div>
+
+              <button type="submit" class="btn btn-primary-institutional w-100 py-2">
+                Update Password
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="portal-footer">
+    <div class="container text-center">
+      <p class="small text-muted mb-0">Secure Student Grievance & Feedback Portal &bull; College Engineering Project</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/toast.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>
